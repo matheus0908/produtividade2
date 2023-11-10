@@ -159,13 +159,27 @@
             salvarRegistros();
         }
 
-        function buscarRegistros() {
+         function buscarRegistros() {
             const buscaData = document.getElementById("buscaData").value;
             const buscaNome = document.getElementById("buscaNome").value;
 
-            resultadosBusca = registros.filter(registro => registro.data === buscaData && registro.nome === buscaNome);
+            const resultados = registros.filter(registro => registro.data === buscaData && registro.nome === buscaNome);
+            let totalFolhasUsuario = 0;
+            let totalPlantasUsuario = 0;
 
-            exibirResultadosBusca();
+            const resultadoDiv = document.createElement("div");
+            resultadoDiv.innerHTML = "<h2>Resultados da busca:</h2>";
+
+            resultados.forEach(registro => {
+                resultadoDiv.innerHTML += `Nome: ${registro.nome}, Requerimento: ${registro.req}, SEI: ${registro.sei}, Folhas: ${registro.folhas}, Plantas: ${registro.plantas}<br>`;
+                totalFolhasUsuario += registro.folhas;
+                totalPlantasUsuario += registro.plantas;
+            });
+
+            resultadoDiv.innerHTML += `<p>Total Folhas do Usuário: ${totalFolhasUsuario}</p>`;
+            resultadoDiv.innerHTML += `<p>Total Plantas do Usuário: ${totalPlantasUsuario}</p>`;
+
+            document.getElementById("registros").appendChild(resultadoDiv);
         }
 
         function buscarPorRequerimentoSEI() {
